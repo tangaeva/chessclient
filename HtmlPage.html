@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta charset = "Windows-1251">
+    <script type="text/javascript" src="../Game.js"></script>
+       <link type="text/css" rel="stylesheet" href="reliefchess.css" />
+</head>
+<body>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ <form name="test" >
+ 
+  <p><input name="button3" type="button" value="Draw" onclick="create_control(8)"></p>
+ </form>
+
+     <script language="javascript" type="text/javascript">  
+
+
+         function create_control(kol) {
+
+ 
+             var table = document.createElement('table');
+
+           //  table.setAttribute('border', '1');
+            // table.setAttribute('bordercolor', 'black');
+             table.setAttribute('bgcolor', 'black');
+
+             var k =1;
+             var k1=1;
+             for (i = 0; i <= kol - 1; i++) 
+             {
+                 var row = table.insertRow(i);
+                 
+
+                 for (j = 0; j <= kol - 1; j++)
+                 {
+                     var cell = row.insertCell(j);
+                     cell.height = 60;
+                     cell.width = 60;
+                    
+
+                     cell.style.backgroundPosition = "center center";
+                   //  cell.style.border = "1px solid black";
+                    // $(cell).css("background-size", "contain");
+                    
+             
+
+                     if (k == 1)
+                     {
+                         cell.style.backgroundColor = "white";                      
+                         cell.setAttribute('name', 'hell');                         
+                         k = 0;
+                     }
+                     else
+                     {
+                         cell.style.backgroundColor = "green";                      
+                         cell.setAttribute('name', 'hell');            
+                         k=1
+                     }
+
+                     //Расстановка для черных
+                     if (i == 0) {
+                         if ((j == 0) || (j == kol - 1)) {
+                             cell.style.backgroundImage = "url(bladya.png)";
+                             cell.setAttribute('name', 'bladya');
+                         }
+                         if ((j == 1) || (j == kol - 2)) {
+                             cell.style.backgroundImage = "url(bhorse.png)";
+                             cell.setAttribute('name', 'bhorse');
+                         }
+                         if ((j == 2) || (j == kol - 3)) {
+                             cell.style.backgroundImage = "url(bofficer.png)";
+                             cell.setAttribute('name', 'bofficer');
+                         }
+                         if (j == 3) {
+                             cell.style.backgroundImage = "url(bqueen.png)";
+                             cell.setAttribute('name', 'bqueen');
+                         }
+                         if (j == 4) {
+                             cell.style.backgroundImage = "url(bking.png)";
+                             cell.setAttribute('name', 'bking');
+                         }
+                     }
+                         if (i == 1) {
+                             cell.style.backgroundImage = "url(bpeshka.png)";
+                             cell.setAttribute('name', 'bpeshka');
+                         }
+
+
+                     //Расстановка для белых
+                         if (i == 7) {
+                             if ((j == 0) || (j == kol - 1)) {
+                                 cell.style.backgroundImage = "url(wladya.png)";
+                                 cell.setAttribute('name', 'wladya');
+                             }
+                             if ((j == 1) || (j == kol - 2)) {
+                                 cell.style.backgroundImage = "url(whorse.png)";
+                                 cell.setAttribute('name', 'whorse');
+                             }
+                             if ((j == 2) || (j == kol - 3)) {
+                                 cell.style.backgroundImage = "url(wofficer.png)";
+                                 cell.setAttribute('name', 'wofficer');
+                             }
+                             if (j == 3) {
+                                 cell.style.backgroundImage = "url(wqueen.png)";
+                                 cell.setAttribute('name', 'wqueen');
+                             }
+                             if (j == 4) {
+                                 cell.style.backgroundImage = "url(wking.png)";
+                                 cell.setAttribute('name', 'wking');
+                             }
+                         }
+                         if (i == 6) {
+                             cell.style.backgroundImage = "url(wpeshka.png)";
+                             cell.setAttribute('name', 'wpeshka');
+                         }
+                     
+                 }
+    
+                 if (k1 == 1) {
+                     k = 0;
+                     k1 = 0;
+                 }
+                 else {
+                     k = 1;
+                     k1 = 1;
+                 }
+             }
+
+             document.body.appendChild(table);
+
+             $("td").click(function () { cellClick(this) });
+         }
+	</script>
+</body>
+</html>
