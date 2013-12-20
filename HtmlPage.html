@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <meta charset = "Windows-1251">
-    <script type="text/javascript" src="../Game.js"></script>
-       <link type="text/css" rel="stylesheet" href="reliefchess.css" />
+  <meta charset = "Windows-1251">
+    <script type="text/javascript" src="Game.js"></script>
 </head>
 <body>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://10.10.2.1:81/socket.io/socket.io.js"></script>
  <form name="test" >
  
   <p><input name="button3" type="button" value="Draw" onclick="create_control(8)"></p>
@@ -15,18 +15,53 @@
 
      <script language="javascript" type="text/javascript">  
 
+         socket = io.connect('http://10.10.2.1:81');
+         socket.on('connected');
+
+                
+         socket.on("waitingForPlayers", function () {
+             alert("Ожидайте противника");
+             whoplay = 0;
+             whogo = 0;
+         });
+
+         socket.on("gameStarted", function () {
+             if (whoplay == 2) {
+                 whoplay = 1;
+                 whogo = 0;
+                 alert("Вы играете за черных");
+             }
+             else {
+                 alert("Вы играете за белых");
+             }
+         });
+
+         socket.on("disconnect", function (data) {
+                 alert("Клиент отключился");
+
+         });
+
+         socket.on("makeMove", function (data) {
+             GO(null, data.xfrom, data.yfrom, data.xto, data.yto, data.newfigure);
+         });
+
 
          function create_control(kol) {
 
- 
-             var table = document.createElement('table');
+             socket.emit("readyToPlay");
+            
+
+
+                 var table = document.createElement('table');
 
            //  table.setAttribute('border', '1');
             // table.setAttribute('bordercolor', 'black');
              table.setAttribute('bgcolor', 'black');
 
              var k =1;
-             var k1=1;
+             var k1 = 1;
+             var ob = 0;
+             var ow = 0;
              for (i = 0; i <= kol - 1; i++) 
              {
                  var row = table.insertRow(i);
@@ -80,10 +115,14 @@
                              cell.style.backgroundImage = "url(bking.png)";
                              cell.setAttribute('name', 'bking');
                          }
+                         CellBlack[ob] = $(cell);
+                         ob = ob + 1;
                      }
                          if (i == 1) {
                              cell.style.backgroundImage = "url(bpeshka.png)";
                              cell.setAttribute('name', 'bpeshka');
+                             CellBlack[ob] = $(cell);
+                             ob = ob + 1;
                          }
 
 
@@ -109,10 +148,14 @@
                                  cell.style.backgroundImage = "url(wking.png)";
                                  cell.setAttribute('name', 'wking');
                              }
+                             CellWhite[ow] = $(cell);
+                             ow = ow + 1;
                          }
                          if (i == 6) {
                              cell.style.backgroundImage = "url(wpeshka.png)";
                              cell.setAttribute('name', 'wpeshka');
+                             CellWhite[ow] = $(cell);
+                             ow = ow + 1;
                          }
                      
                  }
